@@ -33,7 +33,7 @@ var requestHandler = function(request, response) {
 
   if (request.url === '/classes/messages') {
     if (request.method === 'GET') {
-      response.writeHead(200, {'Content-Type': 'application/json'});
+      response.writeHead(200, {'Content-Type': 'application/json', 'access-control-allow-origin': '*'});
       response.end(JSON.stringify(messages));
     } else if (request.method === 'POST') {
       let data = '';
@@ -45,21 +45,21 @@ var requestHandler = function(request, response) {
         message.message_id = messages.length;
         messages.push(message);
         statusCode = 201;
-        response.writeHead(statusCode, {'Content-Type': 'application/json'});
+        response.writeHead(statusCode, {'Content-Type': 'application/json', 'access-control-allow-origin': '*'});
         response.end(JSON.stringify(message));
       })
     } else if (request.method === 'OPTIONS') {
       statusCode = 200;
-      response.writeHead(statusCode, defaultCorsHeaders);
+      response.writeHead(statusCode, headers);
       response.end();
     } else {
       statusCode = 404;
-      response.writeHead(statusCode, {'Content-Type': 'text/plain'});
+      response.writeHead(statusCode, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
       response.end('Not Found');
     }
   } else {
     statusCode = 404;
-    response.writeHead(statusCode, {'Content-Type': 'text/plain'});
+    response.writeHead(statusCode, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
     response.end('Not Found');
   }
   // Documentation for both request and response can be found in the HTTP section at
